@@ -87,9 +87,11 @@ int main(){
  //loop
  bool renderizado = false;
  while(not glfwWindowShouldClose(ventana)){
+    if(not renderizado){
+     rendering();
+     renderizado = true;   
+    }
     
-    rendering();
-    renderizado = true;
     
     read_escape(ventana);
     glfwSwapBuffers(ventana);
