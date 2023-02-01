@@ -6,12 +6,11 @@ Program::Program(){
 Program::~Program(){
     glDeleteProgram(id);
 }
-int Program::bind(){
+void Program::bind(){
     glUseProgram(id);
     int value;
     glGetIntegerv(GL_CURRENT_PROGRAM, &value);
-    if(value == id) return 1;
-    else return 0;
+    if(value != id) throw std::runtime_error("ERROR AL BINDEAR EL PROGRAMA");
 
 }
 void Program::release(){
@@ -21,14 +20,12 @@ void Program::attachShader(int id){
     glAttachShader(this->id, id);
        
 }
-int Program::compile(){
+void Program::compile(){
     glLinkProgram(id);
     int value;
     glGetProgramiv(id, GL_LINK_STATUS, &value);
-    if(value == GL_TRUE) return 1;
-    else{
-       return 0; 
-    } 
+    if(value != GL_TRUE) throw std::runtime_error("ERROR AL COMPILAR EL PROGRAMA");
+   
 }
 int Program::setUniform(std::string uniformName, float value){
     int link = glGetUniformLocation(id, uniformName.c_str());

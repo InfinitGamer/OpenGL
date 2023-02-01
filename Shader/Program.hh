@@ -10,10 +10,10 @@ class Program {
    
     Program();
     ~Program();
-    int bind();
+    void bind();
     void release();
     void attachShader(int id);
-    int compile();
+    void compile();
     int setUniform(std::string uniformName,float value );
     int setUniform(std::string uniformName,const glm::mat3x3& value );
     int setUniform(std::string uniformName,const glm::mat4& value);

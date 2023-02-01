@@ -15,8 +15,8 @@ class Shader{
    static const int FRAGMENT_SHADER = 0x1;
    //funciones
    Shader(int type);
-   int compileSourceShader(std::string path);
-   int compileShader(std::string content);
+   void compileSourceShader(std::string path);
+   void compileShader(std::string content);
    int getId();
    
 };
