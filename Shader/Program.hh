@@ -14,6 +14,8 @@ class Program {
     void release();
     void attachShader(int id);
     void compile();
+    void deleteProgram();
+    void createProgram();
     int setUniform(std::string uniformName,float value );
     int setUniform(std::string uniformName,const glm::mat3x3& value );
     int setUniform(std::string uniformName,const glm::mat4& value);

@@ -14,6 +14,14 @@ void Program::bind(){
 void Program::release(){
     glUseProgram(0);
 }
+void Program::deleteProgram(){
+    glDeleteProgram(id);
+    id  = -1;
+}
+
+void Program::createProgram(){
+    id = glCreateProgram();
+}
 void Program::attachShader(int id){
     glAttachShader(this->id, id);
        
