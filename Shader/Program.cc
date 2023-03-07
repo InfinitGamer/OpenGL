@@ -3,9 +3,7 @@
 Program::Program(){
     id = glCreateProgram();
 }
-Program::~Program(){
-    glDeleteProgram(id);
-}
+Program::~Program(){}
 void Program::bind(){
     glUseProgram(id);
     int value;
