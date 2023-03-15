@@ -33,19 +33,19 @@ void Program::compile(){
     if(value != GL_TRUE) throw std::runtime_error("ERROR AL COMPILAR EL PROGRAMA");
    
 }
-void Program::setUniform(std::string uniformName, float value){
+void Program::setUniform(std::string uniformName, float value) const{
     int link = glGetUniformLocation(id, uniformName.c_str());
     if(link < 0) throw std::runtime_error("ERROR AL INTRODUCIR UNIFORM FLOAT, NOMBRE: " + uniformName );
     glUniform1f(link, value);
     
 }
-void Program::setUniform(std::string uniformName, const glm::mat3x3& value){
+void Program::setUniform(std::string uniformName, const glm::mat3x3& value) const {
     int link = glGetUniformLocation(id, uniformName.c_str());
     if(link < 0) throw std::runtime_error("ERROR AL INTRODUCIR UNIFORM MAT3X3, NOMBRE: " + uniformName );
     glUniformMatrix3fv(link,1,GL_FALSE, &value[0][0]);
     
 }
-void Program::setUniform(std::string uniformName, const glm::mat4& value){
+void Program::setUniform(std::string uniformName, const glm::mat4& value) const{
     int link = glGetUniformLocation(id, uniformName.c_str());
     if(link < 0) throw std::runtime_error("ERROR AL INTRODUCIR UNIFORM MAT4X4, NOMBRE: " + uniformName );
     glUniformMatrix4fv(link,1,GL_FALSE, &value[0][0]);

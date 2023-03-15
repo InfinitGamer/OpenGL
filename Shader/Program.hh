@@ -16,9 +16,9 @@ class Program {
     void compile();
     void deleteProgram();
     void createProgram();
-    void setUniform(std::string uniformName,float value );
-    void setUniform(std::string uniformName,const glm::mat3x3& value );
-    void setUniform(std::string uniformName,const glm::mat4& value);
+    void setUniform(std::string uniformName,float value ) const;
+    void setUniform(std::string uniformName,const glm::mat3x3& value ) const;
+    void setUniform(std::string uniformName,const glm::mat4& value) const;
     int getId();
 };
 #endif
