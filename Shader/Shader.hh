@@ -11,8 +11,8 @@ class Shader{
     GLuint id;
   public:
    //constantes 
-   static const int VERTEX_SHADER = 0x0;
-   static const int FRAGMENT_SHADER = 0x1;
+   static const int VERTEX_SHADER = GL_VERTEX_SHADER;
+   static const int FRAGMENT_SHADER = GL_FRAGMENT_SHADER;
    //funciones
    Shader(int type);
    void compileSourceShader(std::string path);

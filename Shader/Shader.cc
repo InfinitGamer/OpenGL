@@ -2,12 +2,7 @@
 
 
 Shader::Shader(int type){
-    if(type == VERTEX_SHADER){
-        id = glCreateShader(GL_VERTEX_SHADER);
-    }
-    else if(type == FRAGMENT_SHADER){
-        id = glCreateShader(GL_FRAGMENT_SHADER);
-    }
+    id = glCreateShader(type);  
 }
 void Shader::compileShader(std::string content){
     const GLchar* cont = content.c_str();
