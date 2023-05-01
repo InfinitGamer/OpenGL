@@ -96,13 +96,14 @@ void Window::rendering(){
     //cout << "vec2 "<< coor << endl;
     glBindVertexArray(0);
     
+    //funfact, puedes vincular más de una imagen a una Textura y se elegirá el que este activo.
     Texture t("./arcoiris.jpg", GL_TEXTURE1);
-    
+    Texture t2("./tiger.jpg",GL_TEXTURE1);
     p.bind();
     
     p.setUniform("text", 1);
     
-    glBindTexture(GL_TEXTURE_2D, t.getId());
+    glBindTexture(GL_TEXTURE_2D, t2.getId());
     
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES,0,3);
