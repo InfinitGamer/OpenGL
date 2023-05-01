@@ -10,13 +10,10 @@ private:
     int width;
     int height;
 public:
-    Texture(std::string path);
-    ~Texture();
+    Texture(std::string path, int unit);
     unsigned int getId();
     int getWidth();
     int getHeight();
     void deleteTexture();
 };
-
-
 #endif

@@ -7,6 +7,7 @@
 #include <glm/ext.hpp>
 #include "../Shader/Shader.hh"
 #include "../Shader/Program.hh"
+#include "../Texture/Texture.hh"
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -25,6 +26,7 @@ class Window{
     static void callback(GLFWwindow* window, int w, int h);
     static void read_escape(GLFWwindow* window);
     static void add_vertice(vector<glm::vec3>& vector, float x, float y, float z);
+    static void add_vertice(vector<glm::vec2>& vector, float x, float y);
     static void rendering();
     public:
     static Window* getInstance();

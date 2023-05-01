@@ -44,11 +44,19 @@ void Window::add_vertice(vector<glm::vec3>& vector, float x, float y, float z){
     glm::vec3 var = glm::vec3(x,y,z);
     vector.push_back(var);
 }
+void Window::add_vertice(vector<glm::vec2>& vector, float x, float y){
+    glm::vec2 var = glm::vec2(x,y);
+    vector.push_back(var);
+}
 void Window::rendering(){
     vector<glm::vec3> v;
     add_vertice(v, -1.f,0.f,0.f);
     add_vertice(v, 1.f,0.f,0.f);
     add_vertice(v, 0.f,1.f,0.f);
+    vector<glm::vec2> v2;
+    add_vertice(v2,0.f,0.f);
+    add_vertice(v2, 1.f,0.f);
+    add_vertice(v2, 0.5f,1.f);
     glClearColor(0.5f, 0.5f,0.5f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -63,6 +71,14 @@ void Window::rendering(){
     glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
     //esto hace que en la posicion 0 del shader se haga un
     glEnableVertexAttribArray(0);
+    GLuint VBO2;
+    glGenBuffers(1, &VBO2);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+    glBufferData(GL_ARRAY_BUFFER, v2.size()*sizeof(glm::vec2), &v2[0], GL_STATIC_DRAW);
+    glVertexAttribPointer(1,2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+
+
     glBindVertexArray(0);
     Shader vs(Shader::VERTEX_SHADER);
     Shader fs(Shader::FRAGMENT_SHADER);
@@ -70,13 +86,18 @@ void Window::rendering(){
     fs.compileSourceShader("./fshader.frag");
     
     Program p;
-    p.attachShader(vs.getId());
+    Texture t("./arcoiris.jpg", GL_TEXTURE1);
     p.attachShader(fs.getId());
     p.compile();
     p.bind();
+    
+    
+    p.setUniform("text", 1);
+    glBindTexture(GL_TEXTURE_2D, t.getId());
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES,0,3);
     glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     p.release();
 }
 Window* Window::getInstance(){
