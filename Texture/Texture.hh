@@ -15,6 +15,7 @@ public:
     unsigned int getId();
     int getWidth();
     int getHeight();
+    void deleteTexture();
 };
 
 
