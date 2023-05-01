@@ -49,6 +49,17 @@ void Window::add_vertice(vector<glm::vec2>& vector, float x, float y){
     vector.push_back(var);
 }
 void Window::rendering(){
+
+    Shader vs(Shader::VERTEX_SHADER);
+    Shader fs(Shader::FRAGMENT_SHADER);
+    vs.compileSourceShader("./vshader.vert");
+    fs.compileSourceShader("./fshader.frag");
+    
+    Program p;
+    p.attachShader(fs.getId());
+    p.attachShader(vs.getId());
+    p.compile();
+
     vector<glm::vec3> v;
     add_vertice(v, -1.f,0.f,0.f);
     add_vertice(v, 1.f,0.f,0.f);
@@ -57,6 +68,7 @@ void Window::rendering(){
     add_vertice(v2,0.f,0.f);
     add_vertice(v2, 1.f,0.f);
     add_vertice(v2, 0.5f,1.f);
+
     glClearColor(0.5f, 0.5f,0.5f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -67,33 +79,31 @@ void Window::rendering(){
     GLuint VBO;
     glGenBuffers(1,&VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    int vertex = glGetAttribLocation(p.getId(), "vertex");
     glBufferData(GL_ARRAY_BUFFER, v.size()*sizeof(glm::vec3), &v[0], GL_STATIC_DRAW);
-    glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glVertexAttribPointer(vertex,3, GL_FLOAT, GL_FALSE, 0, 0);
+    
     //esto hace que en la posicion 0 del shader se haga un
-    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(vertex);
+    //cout <<"vec3 "<< vertex << endl;
     GLuint VBO2;
     glGenBuffers(1, &VBO2);
     glBindBuffer(GL_ARRAY_BUFFER, VBO2);
     glBufferData(GL_ARRAY_BUFFER, v2.size()*sizeof(glm::vec2), &v2[0], GL_STATIC_DRAW);
-    glVertexAttribPointer(1,2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
-
-
+    int coor = glGetAttribLocation(p.getId(), "coordenadas");
+    glVertexAttribPointer(coor,2, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(coor);
+    //cout << "vec2 "<< coor << endl;
     glBindVertexArray(0);
-    Shader vs(Shader::VERTEX_SHADER);
-    Shader fs(Shader::FRAGMENT_SHADER);
-    vs.compileSourceShader("./vshader.vert");
-    fs.compileSourceShader("./fshader.frag");
     
-    Program p;
     Texture t("./arcoiris.jpg", GL_TEXTURE1);
-    p.attachShader(fs.getId());
-    p.compile();
+    
     p.bind();
     
-    
     p.setUniform("text", 1);
+    
     glBindTexture(GL_TEXTURE_2D, t.getId());
+    
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES,0,3);
     glBindVertexArray(0);

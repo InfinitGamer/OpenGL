@@ -1,8 +1,9 @@
 #version 330 core
-layout (location = 0) in vec3 vertex;
-layout (location = 1) in vec2 txCoord;
+in vec3 vertex; 
+in vec2 coordenadas;
 out vec2 ftxCoord;
 void main(){
+ ftxCoord = coordenadas;
  gl_Position = vec4(vertex, 1.0);
- ftxCoord = txCoord;
+ 
 }

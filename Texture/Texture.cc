@@ -3,6 +3,7 @@
 Texture::Texture(std::string path, int unit){
     //first we get the data from the image
     //variable for the number of channels that have the image
+    stbi_set_flip_vertically_on_load(true);
     int nrChannels;
     stbi_uc* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
     if(data == nullptr) throw std::runtime_error("ERROR AL CARGAR LA TEXTURA");
