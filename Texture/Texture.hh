@@ -9,6 +9,7 @@ private:
     unsigned int id;
     int width;
     int height;
+    static int getRGBType(std::string path);
 public:
     Texture(std::string path, int unit);
     unsigned int getId();

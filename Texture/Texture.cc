@@ -21,8 +21,8 @@ Texture::Texture(std::string path, int unit){
     //parametros para minification y magnification
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, getRGBType(path), GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -39,4 +39,9 @@ int Texture::getWidth(){
 }
 void Texture::deleteTexture(){
     glDeleteTextures(1, &id);
+}
+int Texture::getRGBType(std::string path){
+    if(path.ends_with(".jpg")) return GL_RGB;
+    else if(path.ends_with(".png")) return GL_RGBA;
+    else return -1;
 }

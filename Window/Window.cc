@@ -76,16 +76,15 @@ void Window::rendering(){
     //creamos VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
+    
     GLuint VBO;
     glGenBuffers(1,&VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     int vertex = glGetAttribLocation(p.getId(), "vertex");
     glBufferData(GL_ARRAY_BUFFER, v.size()*sizeof(glm::vec3), &v[0], GL_STATIC_DRAW);
     glVertexAttribPointer(vertex,3, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    //esto hace que en la posicion 0 del shader se haga un
     glEnableVertexAttribArray(vertex);
-    //cout <<"vec3 "<< vertex << endl;
+
     GLuint VBO2;
     glGenBuffers(1, &VBO2);
     glBindBuffer(GL_ARRAY_BUFFER, VBO2);
@@ -93,12 +92,12 @@ void Window::rendering(){
     int coor = glGetAttribLocation(p.getId(), "coordenadas");
     glVertexAttribPointer(coor,2, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(coor);
-    //cout << "vec2 "<< coor << endl;
+    
     glBindVertexArray(0);
     
     //funfact, puedes vincular más de una imagen a una Textura y se elegirá el que este activo.
     Texture t("./arcoiris.jpg", GL_TEXTURE1);
-    Texture t2("./tiger.jpg",GL_TEXTURE1);
+    Texture t2("./facebook.png",GL_TEXTURE1);
     p.bind();
     
     p.setUniform("text", 1);
