@@ -3,6 +3,7 @@
 #include "../glad/glad.h"
 #include "../Image_Loader/stb_image.h"
 #include <iostream>
+
 class Texture
 {
 private:

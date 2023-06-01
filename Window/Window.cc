@@ -24,6 +24,7 @@ Window::Window(){
     }
     glViewport(0,0, 800, 600);
     glfwSetFramebufferSizeCallback(window, callback);
+    c = std::chrono::high_resolution_clock::now();
 }
 void Window::run(){
     while(not glfwWindowShouldClose(window)){
@@ -99,10 +100,19 @@ void Window::rendering(){
     //funfact, puedes vincular más de una imagen a una Textura y se elegirá el que este activo.
     Texture t("./arcoiris.jpg", GL_TEXTURE1);
     Texture t2("./facebook.png",GL_TEXTURE1);
+
+
+    std::chrono::high_resolution_clock::time_point c2 = std::chrono::high_resolution_clock::now();
+    float elapsed_time_ms = std::chrono::duration<float, std::milli>(c2-c).count();
+
+    float time_seconds = elapsed_time_ms / 1000.f;
+    const float velocity = 360.f / 3.0f; 
+    glm::mat4 Transformation = glm::mat4(1.0f);
+    Transformation = glm::rotate(Transformation,glm::radians(velocity*time_seconds), glm::vec3(0.f,0.f,1.f));
     p->bind();
     
     p->setUniform("text", 1);
-    
+    p->setUniform("trans", Transformation);
     glBindTexture(GL_TEXTURE_2D, t2.getId());
     
     glBindVertexArray(VAO);
