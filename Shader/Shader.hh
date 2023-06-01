@@ -7,14 +7,13 @@
 
 
 class Shader{
-  private:
+  protected:
     GLuint id;
   public:
-   //constantes 
-   static const int VERTEX_SHADER = GL_VERTEX_SHADER;
-   static const int FRAGMENT_SHADER = GL_FRAGMENT_SHADER;
+
    //funciones
-   Shader(int type);
+   Shader();
+   
    void compileSourceShader(std::string path);
    void compileShader(std::string content);
    int getId();

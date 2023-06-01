@@ -5,11 +5,13 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include "../Shader/Shader.hh"
+#include "../Shader/VertexShader.hh"
+#include "../Shader/FragmentShader.hh"
 #include "../Shader/Program.hh"
 #include "../Texture/Texture.hh"
 #include <vector>
 #include <iostream>
+#include <memory>
 using namespace std;
 class Window{
     private:

@@ -49,16 +49,17 @@ void Window::add_vertice(vector<glm::vec2>& vector, float x, float y){
     vector.push_back(var);
 }
 void Window::rendering(){
-
-    Shader vs(Shader::VERTEX_SHADER);
-    Shader fs(Shader::FRAGMENT_SHADER);
-    vs.compileSourceShader("./vshader.vert");
-    fs.compileSourceShader("./fshader.frag");
+    std::shared_ptr<Shader> vs(new VertexShader());
+    std::shared_ptr<Shader> fs(new FragmentShader());
     
-    Program p;
-    p.attachShader(fs.getId());
-    p.attachShader(vs.getId());
-    p.compile();
+    vs->compileSourceShader("./vshader.vert");
+    fs->compileSourceShader("./fshader.frag");
+    
+    std::shared_ptr<Program> p (new Program());
+    
+    p->attachShader(fs->getId());
+    p->attachShader(vs->getId());
+    p->compile();
 
     vector<glm::vec3> v;
     add_vertice(v, -1.f,0.f,0.f);
@@ -80,7 +81,7 @@ void Window::rendering(){
     GLuint VBO;
     glGenBuffers(1,&VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    int vertex = glGetAttribLocation(p.getId(), "vertex");
+    int vertex = glGetAttribLocation(p->getId(), "vertex");
     glBufferData(GL_ARRAY_BUFFER, v.size()*sizeof(glm::vec3), &v[0], GL_STATIC_DRAW);
     glVertexAttribPointer(vertex,3, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(vertex);
@@ -89,7 +90,7 @@ void Window::rendering(){
     glGenBuffers(1, &VBO2);
     glBindBuffer(GL_ARRAY_BUFFER, VBO2);
     glBufferData(GL_ARRAY_BUFFER, v2.size()*sizeof(glm::vec2), &v2[0], GL_STATIC_DRAW);
-    int coor = glGetAttribLocation(p.getId(), "coordenadas");
+    int coor = glGetAttribLocation(p->getId(), "coordenadas");
     glVertexAttribPointer(coor,2, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(coor);
     
@@ -98,9 +99,9 @@ void Window::rendering(){
     //funfact, puedes vincular más de una imagen a una Textura y se elegirá el que este activo.
     Texture t("./arcoiris.jpg", GL_TEXTURE1);
     Texture t2("./facebook.png",GL_TEXTURE1);
-    p.bind();
+    p->bind();
     
-    p.setUniform("text", 1);
+    p->setUniform("text", 1);
     
     glBindTexture(GL_TEXTURE_2D, t2.getId());
     
@@ -108,7 +109,7 @@ void Window::rendering(){
     glDrawArrays(GL_TRIANGLES,0,3);
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    p.release();
+    p->release();
 }
 Window* Window::getInstance(){
     if(Window::instance == nullptr) Window::instance = new Window();

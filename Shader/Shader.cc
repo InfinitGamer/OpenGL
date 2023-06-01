@@ -1,9 +1,7 @@
 #include"Shader.hh"
 
 
-Shader::Shader(int type){
-    id = glCreateShader(type);  
-}
+Shader::Shader(){}
 void Shader::compileShader(std::string content){
     const GLchar* cont = content.c_str();
     glShaderSource(id,1, &cont, NULL);
