@@ -9,6 +9,7 @@
 #include "../Shader/FragmentShader.hh"
 #include "../Shader/Program.hh"
 #include "../Texture/Texture.hh"
+#include "../Texture/ImageTexture.hh"
 #include <vector>
 #include <iostream>
 #include <memory>

@@ -53,8 +53,8 @@ void Window::rendering(){
     std::shared_ptr<Shader> vs(new VertexShader());
     std::shared_ptr<Shader> fs(new FragmentShader());
     
-    vs->compileSourceShader("./vshader.vert");
-    fs->compileSourceShader("./fshader.frag");
+    vs->compileSourceShader("./shaders/vshader.vert");
+    fs->compileSourceShader("./shaders/fshader.frag");
     
     std::shared_ptr<Program> p (new Program());
     
@@ -98,8 +98,8 @@ void Window::rendering(){
     glBindVertexArray(0);
     
     //funfact, puedes vincular más de una imagen a una Textura y se elegirá el que este activo.
-    Texture t("./arcoiris.jpg", GL_TEXTURE1);
-    Texture t2("./facebook.png",GL_TEXTURE1);
+    std::shared_ptr<Texture> t(new ImageTexture("./images/arcoiris.jpg", GL_TEXTURE1));
+    std::shared_ptr<Texture> t2(new ImageTexture("./images/facebook.png", GL_TEXTURE1));
 
 
     std::chrono::high_resolution_clock::time_point c2 = std::chrono::high_resolution_clock::now();
@@ -113,12 +113,12 @@ void Window::rendering(){
     
     p->setUniform("text", 1);
     p->setUniform("trans", Transformation);
-    glBindTexture(GL_TEXTURE_2D, t2.getId());
+    t2->bind();
     
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES,0,3);
     glBindVertexArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    t2->release();
     p->release();
 }
 Window* Window::getInstance(){

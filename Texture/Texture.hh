@@ -1,21 +1,18 @@
 #ifndef TEXTURE_HH
 #define TEXTURE_HH
 #include "../glad/glad.h"
-#include "../Image_Loader/stb_image.h"
 #include <iostream>
-
-class Texture
-{
-private:
+class Texture{
+    protected:
     unsigned int id;
     int width;
     int height;
-    static int getRGBType(std::string path);
-public:
-    Texture(std::string path, int unit);
+    public:
     unsigned int getId();
     int getWidth();
     int getHeight();
     void deleteTexture();
+    virtual void bind() = 0;
+    virtual void release() = 0;
 };
 #endif
