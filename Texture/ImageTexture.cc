@@ -10,7 +10,7 @@ ImageTexture::ImageTexture(std::string path, int unit){
     
     //generating the textures
     glGenTextures(1,&id);
-    glActiveTexture(GL_TEXTURE0 + unit);
+    glActiveTexture(GL_TEXTURE0 + this->unit);
     glBindTexture(GL_TEXTURE_2D, id);
     
     //setting the parameteres
