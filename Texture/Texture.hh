@@ -5,6 +5,7 @@
 class Texture{
     protected:
     unsigned int id;
+    unsigned int unit;
     int width;
     int height;
     public:
