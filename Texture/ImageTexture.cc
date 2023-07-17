@@ -1,6 +1,6 @@
 #include"ImageTexture.hh"
 ImageTexture::ImageTexture(std::string path, int unit){
-    this->unit = unit;
+    this->unit = (unsigned int)unit;
     //first we get the data from the image
     //variable for the number of channels that have the image
     stbi_set_flip_vertically_on_load(true);
