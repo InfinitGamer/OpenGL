@@ -98,8 +98,8 @@ void Window::rendering(){
     glBindVertexArray(0);
     
     //funfact, puedes vincular más de una imagen a una Textura y se elegirá el que este activo.
-    std::shared_ptr<Texture> t(new ImageTexture("./images/arcoiris.jpg", GL_TEXTURE1));
-    std::shared_ptr<Texture> t2(new ImageTexture("./images/facebook.png", GL_TEXTURE1));
+    std::shared_ptr<Texture> t(new ImageTexture("./images/arcoiris.jpg", 1));
+    std::shared_ptr<Texture> t2(new ImageTexture("./images/facebook.png", 1));
 
 
     std::chrono::high_resolution_clock::time_point c2 = std::chrono::high_resolution_clock::now();
