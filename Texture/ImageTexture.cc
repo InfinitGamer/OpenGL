@@ -1,5 +1,8 @@
-#include"ImageTexture.hh"
+#include"./ImageTexture.hh"
 ImageTexture::ImageTexture(std::string path, int unit){
+   createInstance(path,unit);
+}
+void ImageTexture::createInstance(std::string path, int unit){
     //first we get the data from the image
     //variable for the number of channels that have the image
     stbi_set_flip_vertically_on_load(true);
@@ -26,6 +29,9 @@ ImageTexture::ImageTexture(std::string path, int unit){
 
     glBindTexture(GL_TEXTURE_2D, 0);
     stbi_image_free(data);
+ }
+void ImageTexture::createTexture(std::string path, int unit){
+    createInstance(path,unit);
 }
 int ImageTexture::getRGBType(std::string path){
     if(path.ends_with(".jpg")) return GL_RGB;

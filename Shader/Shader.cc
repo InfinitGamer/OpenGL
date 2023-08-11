@@ -1,7 +1,8 @@
-#include"Shader.hh"
+#include"./Shader.hh"
 
 
 Shader::Shader(){}
+Shader::~Shader(){}
 void Shader::compileShader(std::string content){
     const GLchar* cont = content.c_str();
     glShaderSource(id,1, &cont, NULL);
@@ -19,4 +20,8 @@ void Shader::compileSourceShader(std::string path){
 }
 int Shader::getId(){
     return id;
+}
+void Shader::deleteShader(){
+    if(glIsShader(id))glDeleteShader(id);
+    id = -1;
 }

@@ -8,9 +8,11 @@ class ImageTexture: public  Texture
 {
 private:
     static int getRGBType(std::string path);
+    void createInstance(std::string path, int unit);
 public:
     ImageTexture(std::string path, int unit);
-    virtual void bind();
-    virtual void release();
+    void createTexture(std::string path, int unit) override;
+    virtual void bind() override;
+    virtual void release() override;
 };
 #endif

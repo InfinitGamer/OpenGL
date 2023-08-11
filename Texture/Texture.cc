@@ -1,5 +1,6 @@
-#include "Texture.hh"
+#include "./Texture.hh"
 
+Texture::~Texture(){}
 
 unsigned int Texture::getId(){
     return id;
@@ -11,5 +12,6 @@ int Texture::getWidth(){
     return width;
 }
 void Texture::deleteTexture(){
-    glDeleteTextures(1, &id);
+    if(glIsTexture(id)) glDeleteTextures(1, &id);
+    id = -1;
 }

@@ -13,9 +13,11 @@ class Shader{
 
    //funciones
    Shader();
-   
+   virtual ~Shader();
    void compileSourceShader(std::string path);
    void compileShader(std::string content);
+   void deleteShader();
+   virtual void createShader() = 0;
    int getId();
    
 };

@@ -6,5 +6,6 @@
 class FragmentShader : public Shader {
     public:
     FragmentShader();
+    void createShader() override;
 };
 #endif

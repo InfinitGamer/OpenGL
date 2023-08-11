@@ -1,5 +1,6 @@
 #include "./Window.hpp"
 Window* Window::instance = nullptr;
+Window::~Window(){}
 void Window::callback(GLFWwindow* window, int w, int h){
     glViewport(0,0, w,h);
 }

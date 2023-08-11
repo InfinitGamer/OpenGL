@@ -8,7 +8,6 @@
 #include "../Shader/VertexShader.hh"
 #include "../Shader/FragmentShader.hh"
 #include "../Shader/Program.hh"
-#include "../Texture/Texture.hh"
 #include "../Texture/ImageTexture.hh"
 #include <vector>
 #include <iostream>
@@ -20,7 +19,7 @@ class Window{
     //singleton object
     static Window* instance;
     Window();
-    ~Window();
+    virtual ~Window();
     //attributes
 
     GLFWwindow* window;

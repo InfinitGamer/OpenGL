@@ -15,7 +15,7 @@ void Program::release(){
     glUseProgram(0);
 }
 void Program::deleteProgram(){
-    glDeleteProgram(id);
+    if(glIsProgram(id)) glDeleteProgram(id);
     id  = -1;
 }
 

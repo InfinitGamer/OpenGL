@@ -6,5 +6,6 @@
 class VertexShader : public Shader {
     public:
     VertexShader();
+    void createShader() override;
 };
 #endif
