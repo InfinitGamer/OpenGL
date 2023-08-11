@@ -3,6 +3,7 @@ ImageTexture::ImageTexture(std::string path, int unit){
    createInstance(path,unit);
 }
 void ImageTexture::createInstance(std::string path, int unit){
+    this->unit = (unsigned int) unit;
     //first we get the data from the image
     //variable for the number of channels that have the image
     stbi_set_flip_vertically_on_load(true);
@@ -12,7 +13,7 @@ void ImageTexture::createInstance(std::string path, int unit){
     
     //generating the textures
     glGenTextures(1,&id);
-    glActiveTexture(unit);
+    glActiveTexture(GL_TEXTURE0 + this->unit);
     glBindTexture(GL_TEXTURE_2D, id);
     
     //setting the parameteres
@@ -39,6 +40,7 @@ int ImageTexture::getRGBType(std::string path){
     else return -1;
 }
 void ImageTexture::bind(){
+    glActiveTexture(GL_TEXTURE0 + unit);
     glBindTexture(GL_TEXTURE_2D, getId());
 }
 void ImageTexture::release(){
