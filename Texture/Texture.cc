@@ -14,4 +14,5 @@ int Texture::getWidth(){
 void Texture::deleteTexture(){
     if(glIsTexture(id)) glDeleteTextures(1, &id);
     id = -1;
+    unit = -1;
 }

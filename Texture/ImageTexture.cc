@@ -44,5 +44,6 @@ void ImageTexture::bind(){
     glBindTexture(GL_TEXTURE_2D, getId());
 }
 void ImageTexture::release(){
+    glActiveTexture(GL_TEXTURE0);
      glBindTexture(GL_TEXTURE_2D, 0);
 }
