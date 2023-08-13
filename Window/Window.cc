@@ -166,27 +166,28 @@ void Window::initialize(){
     
     //funfact, puedes vincular más de una imagen a una Textura y se elegirá el que este activo.
      t = std::shared_ptr<Texture>(new ImageTexture("./images/arcoiris.jpg", 1));
-     t2 = std::shared_ptr<Texture>(new ImageTexture("./images/facebook.png", 1));
+     t2 = std::shared_ptr<Texture>(new ImageTexture("./images/obama.png", 2));
      c = std::chrono::high_resolution_clock::now();
 }
 void Window::rendering(){
     glClearColor(0.5f, 0.5f,0.5f, 1.f);
     //Clear color buffer and depth  buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    /*
+    
     std::chrono::high_resolution_clock::time_point c2 = std::chrono::high_resolution_clock::now();
     float elapsed_time_ms = std::chrono::duration<float, std::milli>(c2-c).count();
 
     float time_seconds = elapsed_time_ms / 1000.f;
     const float velocity = 360.f / 3.0f; 
     glm::mat4 Transformation = glm::mat4(1.0f);
-    Transformation = glm::rotate(Transformation,glm::radians(velocity*time_seconds), glm::vec3(0.f,0.f,1.f));
-    */
+    Transformation = glm::rotate(Transformation,glm::radians(velocity*time_seconds), glm::vec3(0.f,1.f,0.f));
+    
     
     p->bind();
     
-    p->setUniform("text", 1);
+    p->setUniform("text", 2);
     p->setUniform("trans", transform);
+    p->setUniform("model", Transformation);
     t2->bind();
     
     glBindVertexArray(VAO);

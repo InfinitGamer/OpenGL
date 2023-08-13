@@ -35,7 +35,7 @@ void ImageTexture::createTexture(std::string path, int unit){
     createInstance(path,unit);
 }
 int ImageTexture::getRGBType(std::string path){
-    if(path.ends_with(".jpg")) return GL_RGB;
+    if(path.ends_with(".jpg") or path.ends_with(".jpeg")) return GL_RGB;
     else if(path.ends_with(".png")) return GL_RGBA;
     else return -1;
 }
