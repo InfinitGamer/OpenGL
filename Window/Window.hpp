@@ -1,6 +1,7 @@
 #ifndef WINDOW_HH
 #define WINDOW_HH
 #define GLFW_INCLUDE_NONE
+#define GLM_FORCE_RADIANS
 #include "../glad/glad.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -20,9 +21,12 @@ class Window{
     static Window* instance;
     Window();
     virtual ~Window();
+    
     //attributes
-
     GLFWwindow* window;
+    int h;
+    int w;
+
 
     //instance attributes
     std::shared_ptr<Shader> vs;
@@ -36,19 +40,23 @@ class Window{
     std::shared_ptr<Texture> t;
     std::shared_ptr<Texture> t2;
     std::chrono::high_resolution_clock::time_point c;
-
-
+    glm::mat4 transform;
     //functions
-    void initialize();
+    
     static void callback(GLFWwindow* window, int w, int h);
     static void read_escape(GLFWwindow* window);
     static void add_vertice(vector<glm::vec3>& vector, float x, float y, float z);
     static void add_vertice(vector<glm::vec2>& vector, float x, float y);
     void rendering();
-
+    void initialize();
+    
+    
     public:
     static Window* getInstance();
     void run();
+    void setViewport(int height, int width);
+    void setHeight(int height);
+    void setWidth(int width);
     Window(Window& other) = delete;
     void operator=(const Window&) = delete;
 

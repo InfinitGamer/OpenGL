@@ -2,7 +2,9 @@
 Window* Window::instance = nullptr;
 Window::~Window(){}
 void Window::callback(GLFWwindow* window, int w, int h){
-    glViewport(0,0, w,h);
+    Window* temp = Window::getInstance();
+    temp->setViewport(w,h);
+    
 }
 Window::Window(){
     glfwInit();
@@ -23,7 +25,9 @@ Window::Window(){
         cout << "no funciona glad" << endl;
         throw runtime_error("ERROR AL CARGAR GLAD");
     }
-    glViewport(0,0, 800, 600);
+    setViewport(800,600);
+    //active depth test
+    glEnable(GL_DEPTH_TEST);
     glfwSetFramebufferSizeCallback(window, callback);
     initialize();
 }
@@ -35,6 +39,17 @@ void Window::run(){
     glfwPollEvents();
  }
  glfwTerminate();
+}
+void Window::setHeight(int height){
+    h = height;
+}
+void Window::setWidth(int width){
+    w = width;
+}
+void Window::setViewport(int height, int width){
+    glViewport(0,0, height,width);
+    setHeight(height);
+    setWidth(width);
 }
 void Window::read_escape(GLFWwindow* window){
     if(glfwGetKey(window,GLFW_KEY_ESCAPE) == GLFW_PRESS){
@@ -64,17 +79,69 @@ void Window::initialize(){
     p->compile();
 
     //init v
+    /* 
     add_vertice(v, -1.f,0.f,0.f);
     add_vertice(v, 1.f,0.f,0.f);
     add_vertice(v, 0.f,1.f,0.f);
+    */
+    add_vertice(v, -5.0f, 0, 5.0f);
+    add_vertice(v, -5.0f, 0, -5.0f);
+    add_vertice(v, 5.0f, 0, -5.0f);
+
+    add_vertice(v, -5.0f, 0, 5.0f);
+    add_vertice(v, 5.0f, 0, -5.0f);
+    add_vertice(v, 5.0f, 0, 5.0f);
+
+
+    add_vertice(v, 0.0f, 10.0f, 0.0f);
+    add_vertice(v, -5.0f, 0, 5.0f);
+    add_vertice(v, 5.0f, 0, 5.0f);
+
+    add_vertice(v, 0.0f, 10.0f, 0.0f);
+    add_vertice(v, 5.0f, 0, 5.0f);
+    add_vertice(v, 5.0f, 0, -5.0f);
+
+    add_vertice(v, 0.0f, 10.0f, 0.0f);
+    add_vertice(v, 5.0f, 0, -5.0f);
+    add_vertice(v, -5.0f, 0, -5.0f);
+
+    add_vertice(v, 0.0f, 10.0f, 0.0f);
+    add_vertice(v, -5.0f, 0, -5.0f);
+    add_vertice(v, -5.0f, 0, 5.0f);
+
     //init v2
+    
+    add_vertice(v2, 0.5f,1.f);
     add_vertice(v2,0.f,0.f);
     add_vertice(v2, 1.f,0.f);
+
     add_vertice(v2, 0.5f,1.f);
+    add_vertice(v2,0.f,0.f);
+    add_vertice(v2, 1.f,0.f);
+    
+    add_vertice(v2, 0.5f,1.f);
+    add_vertice(v2,0.f,0.f);
+    add_vertice(v2, 1.f,0.f);
+    
+    add_vertice(v2, 0.5f,1.f);
+    add_vertice(v2,0.f,0.f);
+    add_vertice(v2, 1.f,0.f);
+    
+    add_vertice(v2, 0.5f,1.f);
+    add_vertice(v2,0.f,0.f);
+    add_vertice(v2, 1.f,0.f);
+
+    add_vertice(v2, 0.5f,1.f);
+    add_vertice(v2,0.f,0.f);
+    add_vertice(v2, 1.f,0.f);
 
     
+    //creamos transformacion 
+    transform = glm::mat4(1.0f);
+    glm::mat4 view = glm::lookAt(glm::vec3(-30.0f, 30.0f,30.0f), glm::vec3(0.0f, 5.0f,0.0f), glm::vec3(0.0f, 1.0f,0.0f));
     
-    
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f),(float)w/(float)h, 1.f, 200.f);
+    transform = projection * view ;
     //creamos VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -104,8 +171,9 @@ void Window::initialize(){
 }
 void Window::rendering(){
     glClearColor(0.5f, 0.5f,0.5f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
+    //Clear color buffer and depth  buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    /*
     std::chrono::high_resolution_clock::time_point c2 = std::chrono::high_resolution_clock::now();
     float elapsed_time_ms = std::chrono::duration<float, std::milli>(c2-c).count();
 
@@ -113,14 +181,16 @@ void Window::rendering(){
     const float velocity = 360.f / 3.0f; 
     glm::mat4 Transformation = glm::mat4(1.0f);
     Transformation = glm::rotate(Transformation,glm::radians(velocity*time_seconds), glm::vec3(0.f,0.f,1.f));
+    */
+    
     p->bind();
     
     p->setUniform("text", 1);
-    p->setUniform("trans", Transformation);
+    p->setUniform("trans", transform);
     t2->bind();
     
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES,0,3);
+    glDrawArrays(GL_TRIANGLES,0,v.size());
     glBindVertexArray(0);
     t2->release();
     p->release();
