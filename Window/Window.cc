@@ -46,8 +46,14 @@ void Window::setHeight(int height){
 void Window::setWidth(int width){
     w = width;
 }
-void Window::setViewport(int height, int width){
-    glViewport(0,0, height,width);
+int Window::getHeight(){
+    return h;
+}
+int Window::getWidth(){
+    return w;
+}
+void Window::setViewport(int width, int height){
+    glViewport(0,0, width,height);
     setHeight(height);
     setWidth(width);
 }
@@ -139,8 +145,11 @@ void Window::initialize(){
     //creamos transformacion 
     transform = glm::mat4(1.0f);
     glm::mat4 view = glm::lookAt(glm::vec3(-30.0f, 30.0f,30.0f), glm::vec3(0.0f, 5.0f,0.0f), glm::vec3(0.0f, 1.0f,0.0f));
-    
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f),(float)w/(float)h, 1.f, 200.f);
+    bool option = true;
+    glm::mat4 projection;
+    float ratio = (float)getWidth()/(float)getHeight();
+    if (option) projection = glm::perspective(glm::radians(45.0f),ratio, 1.f, 200.f);
+    else projection = glm::ortho(-20.f, 20.f, 1.f/ratio*-20.f,1.f/ratio*20.f, 1.f,200.f);
     transform = projection * view ;
     //creamos VAO
     glGenVertexArrays(1, &VAO);

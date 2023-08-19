@@ -54,9 +54,11 @@ class Window{
     public:
     static Window* getInstance();
     void run();
-    void setViewport(int height, int width);
+    void setViewport(int witdh, int height);
     void setHeight(int height);
     void setWidth(int width);
+    int getHeight();
+    int getWidth();
     Window(Window& other) = delete;
     void operator=(const Window&) = delete;
 
