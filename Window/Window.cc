@@ -29,16 +29,25 @@ Window::Window(){
     //active depth test
     glEnable(GL_DEPTH_TEST);
     glfwSetFramebufferSizeCallback(window, callback);
+    //this fixes the cursor in the center and don't show it
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    
+    glfwSetCursorPosCallback(window, mouse_callback);
     initialize();
 }
 void Window::run(){
+    float lastTime = 0.f;
     while(not glfwWindowShouldClose(window)){
-    rendering();    
-    read_escape(window);
-    glfwSwapBuffers(window);
-    glfwPollEvents();
- }
- glfwTerminate();
+        float currentTime = (float)glfwGetTime();
+        dt = currentTime - lastTime;
+        
+        lastTime = currentTime;
+        rendering();    
+        read_escape(window);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+    glfwTerminate();
 }
 void Window::setHeight(int height){
     h = height;
@@ -77,6 +86,10 @@ void Window::add_vertice(vector<glm::vec2>& vector, float x, float y){
     vector.push_back(var);
 }
 void Window::initialize(){
+    setMouseX(400.f);
+    setMouseY(300.f);
+    setFirst_Move(true);
+    dt = 0.f;
      vs = std::shared_ptr<Shader>(new VertexShader());
      fs = std::shared_ptr<Shader>(new FragmentShader());
     
@@ -215,14 +228,63 @@ Window* Window::getInstance(){
 }
 
 void Window::moveUp(){
-    cam->moveUp();
+    cam->moveUp(dt);
 }
 void Window::moveDown(){
-    cam->moveDown();
+    cam->moveDown(dt);
 }
 void Window::moveLeft(){
-    cam->moveLeft();
+    cam->moveLeft(dt);
 }
 void Window::moveRight(){
-    cam->moveRight();
+    cam->moveRight(dt);
+}
+
+void Window::setMouseX(float x){
+    mouseX = x;
+}
+void Window::setMouseY(float y){
+    mouseY = y;
+    
+}
+void Window::calculateMouseDistanceX(float x){
+    float xoffset = x - mouseX;
+    //cout<< "Offset de x = "<< xoffset << endl;
+    cam->addYaw(xoffset);
+}
+void Window::calculateMouseDistanceY(float y){
+    float yoffset = -(y - mouseY);
+    //cout<< "Offset de y = "<< yoffset << endl;
+    cam -> addPitch(yoffset);
+}
+
+void Window::mouse_callback(GLFWwindow* window, double xpos, double ypos){
+    Window* w = Window::getInstance();
+    
+   
+    if(w->getFirst_Move()){
+        w->setMouseX((float)xpos);
+        w->setMouseY((float) ypos );
+        w->setFirst_Move(false);
+    }
+    w->calculateMouseDistanceX((float)xpos );
+    w->calculateMouseDistanceY((float) ypos );
+    w->setMouseX((float)xpos);
+    w->setMouseY((float) ypos );
+    
+}
+
+bool Window::getFirst_Move(){
+    return first_move;
+}
+void Window::setFirst_Move(bool move){
+    first_move = move;
+}
+
+
+int Window::getCenterX(){
+    return w / 2;
+}
+int Window::getCenterY(){
+    return h / 2;
 }

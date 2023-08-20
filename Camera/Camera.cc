@@ -1,6 +1,6 @@
 #include"./Camera.hh"
-const float Camera::cameraSpeed = 0.25f;
-const float Camera::rotationSpeed = 360.f / 1000.f;
+const float Camera::cameraSpeed = 5.f;
+const float Camera::rotationSpeed = 360.f / 800000.f;
 Camera::Camera(){
     cameraPos = glm::vec3(0.f,0.f,0.f);
     cameraUp = glm::vec3(0.f,1.f,0.f);
@@ -17,29 +17,35 @@ Camera::Camera(const glm::vec3& cPos){
     recalculateFront(cameraFront, pitch, yaw); 
 }
 
-void Camera::moveUp(){
-    cameraPos += cameraSpeed * cameraFront;
+void Camera::moveUp(float dt){
+    cameraPos += cameraSpeed * dt * cameraFront;
 }
-void Camera::moveDown(){
-    cameraPos -= cameraSpeed * cameraFront;
+void Camera::moveDown(float dt){
+    cameraPos -= cameraSpeed * dt * cameraFront;
 }
-void Camera::moveLeft(){
-    cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront,cameraUp));
+void Camera::moveLeft(float dt){
+    cameraPos -= cameraSpeed * dt * glm::normalize(glm::cross(cameraFront,cameraUp));
 }
-void Camera::moveRight(){
-    cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront,cameraUp));
+void Camera::moveRight(float dt){
+    cameraPos += cameraSpeed * dt * glm::normalize(glm::cross(cameraFront,cameraUp));
 }
 void Camera::recalculateFront(glm::vec3& front, float pitch, float yaw){
+    
     front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front = glm::normalize(front);
 }
 
-void Camera::addYaw(const int distance){
-    yaw += rotationSpeed * (float) distance;
+void Camera::addYaw(const float distance){
+    yaw += rotationSpeed * distance;
+    recalculateFront(cameraFront, pitch, yaw); 
 }
-void Camera::addPitch(const int distance){
-    pitch += rotationSpeed * (float) distance;
+void Camera::addPitch(const float distance){
+    pitch += rotationSpeed * distance;
+    if(pitch > 89.0f) pitch = 89.0f;
+    if(pitch < -89.0f) pitch = -89.0f;
+    recalculateFront(cameraFront, pitch, yaw); 
 }
 
 void Camera::passCamera(std::shared_ptr<Program> p){

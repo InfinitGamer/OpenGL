@@ -24,12 +24,12 @@ class Camera{
     public:
     Camera();
     Camera(const glm::vec3& cPos);
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
-    void addYaw(const int distance);
-    void addPitch(const int distance);
+    void moveUp(float dt);
+    void moveDown(float dt);
+    void moveLeft(float dt);
+    void moveRight(float dt);
+    void addYaw(const float distance);
+    void addPitch(const float distance);
     void passCamera(std::shared_ptr<Program> p);
 
 };

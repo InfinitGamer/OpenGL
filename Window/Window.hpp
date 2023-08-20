@@ -43,10 +43,17 @@ class Window{
     std::shared_ptr<Texture> t2;
     std::chrono::high_resolution_clock::time_point c;
     glm::mat4 projection;
+
+    float dt;
+
+    float mouseX;
+    float mouseY;
+    bool first_move;
     //functions
     
     static void callback(GLFWwindow* window, int w, int h);
     static void read_escape(GLFWwindow* window);
+    static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
     static void add_vertice(vector<glm::vec3>& vector, float x, float y, float z);
     static void add_vertice(vector<glm::vec2>& vector, float x, float y);
     void rendering();
@@ -67,9 +74,17 @@ class Window{
     void moveLeft();
     void moveRight();
 
-
+    void setMouseX(float x);
+    void setMouseY(float y);
+    void calculateMouseDistanceX(float x);
+    void calculateMouseDistanceY(float y);
+    bool getFirst_Move();
+    void setFirst_Move(bool move);
+    int getCenterX();
+    int getCenterY();
     Window(Window& other) = delete;
     void operator=(const Window&) = delete;
+    
 
 
 };
