@@ -1,6 +1,6 @@
 #include"./Camera.hh"
 const float Camera::cameraSpeed = 5.f;
-const float Camera::rotationSpeed = 360.f / 800000.f;
+const float Camera::rotationSpeed = 360.f / 600000.f;
 Camera::Camera(){
     cameraPos = glm::vec3(0.f,0.f,0.f);
     cameraUp = glm::vec3(0.f,1.f,0.f);
