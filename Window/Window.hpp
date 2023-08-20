@@ -10,6 +10,7 @@
 #include "../Shader/FragmentShader.hh"
 #include "../Shader/Program.hh"
 #include "../Texture/ImageTexture.hh"
+#include "../Camera/Camera.hh"
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -32,6 +33,7 @@ class Window{
     std::shared_ptr<Shader> vs;
     std::shared_ptr<Shader> fs;
     std::shared_ptr<Program> p;
+    std::shared_ptr<Camera> cam;
     vector<glm::vec3> v;
     vector<glm::vec2> v2;
     GLuint VAO;
@@ -40,7 +42,7 @@ class Window{
     std::shared_ptr<Texture> t;
     std::shared_ptr<Texture> t2;
     std::chrono::high_resolution_clock::time_point c;
-    glm::mat4 transform;
+    glm::mat4 projection;
     //functions
     
     static void callback(GLFWwindow* window, int w, int h);
@@ -59,6 +61,13 @@ class Window{
     void setWidth(int width);
     int getHeight();
     int getWidth();
+
+    void moveUp();
+    void moveDown();
+    void moveLeft();
+    void moveRight();
+
+
     Window(Window& other) = delete;
     void operator=(const Window&) = delete;
 

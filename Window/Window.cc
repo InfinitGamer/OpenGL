@@ -62,6 +62,11 @@ void Window::read_escape(GLFWwindow* window){
         glfwSetWindowShouldClose(window, true);
 
     }
+    Window* w = Window::getInstance();
+    if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) w->moveUp();
+    if(glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) w->moveDown();
+    if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) w->moveLeft();
+    if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS) w->moveRight();
 }
 void Window::add_vertice(vector<glm::vec3>& vector, float x, float y, float z){
     glm::vec3 var = glm::vec3(x,y,z);
@@ -143,14 +148,12 @@ void Window::initialize(){
 
     
     //creamos transformacion 
-    transform = glm::mat4(1.0f);
-    glm::mat4 view = glm::lookAt(glm::vec3(-30.0f, 30.0f,30.0f), glm::vec3(0.0f, 5.0f,0.0f), glm::vec3(0.0f, 1.0f,0.0f));
+    cam = shared_ptr<Camera>(new Camera(glm::vec3(0.f,5.f,5.f)));
     bool option = true;
-    glm::mat4 projection;
     float ratio = (float)getWidth()/(float)getHeight();
     if (option) projection = glm::perspective(glm::radians(45.0f),ratio, 1.f, 200.f);
     else projection = glm::ortho(-20.f, 20.f, 1.f/ratio*-20.f,1.f/ratio*20.f, 1.f,200.f);
-    transform = projection * view ;
+    
     //creamos VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -195,7 +198,8 @@ void Window::rendering(){
     p->bind();
     
     p->setUniform("text", 2);
-    p->setUniform("trans", transform);
+    p->setUniform("projMatrix", projection);
+    cam->passCamera(p);
     p->setUniform("model", Transformation);
     t2->bind();
     
@@ -208,4 +212,17 @@ void Window::rendering(){
 Window* Window::getInstance(){
     if(Window::instance == nullptr) Window::instance = new Window();
     return Window::instance;
+}
+
+void Window::moveUp(){
+    cam->moveUp();
+}
+void Window::moveDown(){
+    cam->moveDown();
+}
+void Window::moveLeft(){
+    cam->moveLeft();
+}
+void Window::moveRight(){
+    cam->moveRight();
 }
