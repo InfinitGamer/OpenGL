@@ -148,7 +148,7 @@ void Window::initialize(){
 
     
     //creamos transformacion 
-    cam = shared_ptr<Camera>(new Camera(glm::vec3(0.f,5.f,5.f)));
+    cam = shared_ptr<Camera>(new Camera(glm::vec3(0.f,5.f,30.f)));
     bool option = true;
     float ratio = (float)getWidth()/(float)getHeight();
     if (option) projection = glm::perspective(glm::radians(45.0f),ratio, 1.f, 200.f);
