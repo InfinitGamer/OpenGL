@@ -38,20 +38,14 @@ void Camera::recalculateFront(glm::vec3& front, float pitch, float yaw){
 }
 
 void Camera::addYaw(const float distance){
-    std::cout << rotationSpeed * distance << std::endl;
     yaw += rotationSpeed * distance;
     recalculateFront(cameraFront, pitch, yaw);
-    
-    
 }
 void Camera::addPitch(const float distance){
-    std::cout << rotationSpeed * distance << std::endl;
-    
     pitch += rotationSpeed * distance;
     if(pitch > 89.0f) pitch = 89.0f;
     if(pitch < -89.0f) pitch = -89.0f;
     recalculateFront(cameraFront, pitch, yaw); 
-    
 }
 
 void Camera::passCamera(std::shared_ptr<Program> p){
