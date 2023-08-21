@@ -40,13 +40,14 @@ void Window::run(){
     while(not glfwWindowShouldClose(window)){
         float currentTime = (float)glfwGetTime();
         dt = currentTime - lastTime;
-        
         lastTime = currentTime;
-        rendering();    
+        
+        glfwPollEvents();
         read_escape(window);
+        rendering();   
         
         glfwSwapBuffers(window);
-        glfwPollEvents();
+        
     }
     glfwTerminate();
 }
