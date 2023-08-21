@@ -44,6 +44,7 @@ void Window::run(){
         lastTime = currentTime;
         rendering();    
         read_escape(window);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
